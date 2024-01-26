@@ -1,11 +1,10 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { NotificationContainer } from 'react-notifications';
 
-import ContactDetails from 'pages/ContactDetails';
-import Contacts from 'pages/Contacts';
+import { ContactDetails, Contacts } from 'pages';
 
-import css from 'components/App/App.module.css';
 import 'react-notifications/lib/notifications.css';
+import css from 'components/App/App.module.css';
 
 export const App = () => {
   const location = useLocation();
@@ -24,4 +23,3 @@ export const App = () => {
     </div>
   );
 };
-// https://i.ibb.co/2ShmK52/nobody.png

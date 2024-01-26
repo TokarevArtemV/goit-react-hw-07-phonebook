@@ -52,8 +52,8 @@ export const ContactForm = () => {
           className={css.form_input}
           type="tel"
           name="phone"
-          pattern="\d{3}[\-]\d{2}[\-]\d{2}"
-          title="Number may contain only numbers and dushes. For example 123-45-67"
+          pattern="\d{3}[\-]\d{3}[\-]\d{4}"
+          title="Number may contain only numbers and dushes. For example 050-111-2233"
           required
         />
       </label>

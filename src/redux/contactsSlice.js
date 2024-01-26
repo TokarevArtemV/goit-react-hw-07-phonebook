@@ -1,54 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { delContact, getContactById, getContacts, postContact } from 'services';
+import { createSlice } from '@reduxjs/toolkit';
 import { statusState } from './constants';
-
-export const apiGetContacts = createAsyncThunk(
-  'contacts/apiGetContacts',
-  async (_, thankApi) => {
-    try {
-      const contacts = await getContacts();
-      return contacts.data;
-    } catch (error) {
-      return thankApi.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const apiGetContactById = createAsyncThunk(
-  'contacts/apiGetContactById',
-  async (contactId, thankApi) => {
-    try {
-      const contact = await getContactById(contactId);
-      return contact.data;
-    } catch (error) {
-      return thankApi.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const apiPostContact = createAsyncThunk(
-  'contacts/apiPostContact',
-  async (contactDetails, thankApi) => {
-    try {
-      const contacts = await postContact(contactDetails);
-      return contacts.data;
-    } catch (error) {
-      return thankApi.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const apiDeleteContact = createAsyncThunk(
-  'contacts/apiDeleteContact',
-  async (contactId, thankApi) => {
-    try {
-      const contacts = await delContact(contactId);
-      return contacts.data;
-    } catch (error) {
-      return thankApi.rejectWithValue(error.message);
-    }
-  }
-);
+import {
+  apiDeleteContact,
+  apiGetContactById,
+  apiGetContacts,
+  apiPostContact,
+} from './operations';
 
 const initialContacts = {
   contacts: [],
@@ -56,6 +13,21 @@ const initialContacts = {
   status: statusState.idle, // "idle" | "pending" | "success" | "error"
   error: null,
   location: null,
+};
+
+const handlePending = (state, { payload }) => {
+  state.status = statusState.error;
+  state.error = payload;
+};
+
+const handleFulfilled = (state, { payload }) => {
+  state.status = statusState.error;
+  state.error = payload;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.status = statusState.error;
+  state.error = payload;
 };
 
 const contactsSlice = createSlice({
@@ -68,6 +40,7 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder =>
     builder
+
       // ============= GET Contacts ===============
       .addCase(apiGetContacts.pending, (state, _) => {
         state.status = statusState.pending;
@@ -78,10 +51,10 @@ const contactsSlice = createSlice({
         state.error = null;
         state.contacts = action.payload;
       })
-      .addCase(apiGetContacts.rejected, (state, action) => {
-        state.status = statusState.error;
-        state.error = action.payload;
-      })
+      .addCase(apiGetContacts.rejected, (state, action) =>
+        handleRejected(state, action)
+      )
+
       // ============= GET Contact bu ID ===============
       .addCase(apiGetContactById.pending, (state, _) => {
         state.contactById = null;
@@ -94,9 +67,9 @@ const contactsSlice = createSlice({
         state.contactById = action.payload;
       })
       .addCase(apiGetContactById.rejected, (state, action) => {
-        state.status = statusState.error;
-        state.error = action.payload;
+        handleRejected(state, action);
       })
+
       // ============= ADD Contact ===============
       .addCase(apiPostContact.pending, (state, _) => {
         state.status = statusState.pending;
@@ -108,8 +81,7 @@ const contactsSlice = createSlice({
         state.contacts.push(action.payload);
       })
       .addCase(apiPostContact.rejected, (state, action) => {
-        state.status = statusState.error;
-        state.error = action.payload;
+        handleRejected(state, action);
       })
 
       // ============= Delete Contact ===============
@@ -126,8 +98,7 @@ const contactsSlice = createSlice({
         state.contacts.splice(index, 1);
       })
       .addCase(apiDeleteContact.rejected, (state, action) => {
-        state.status = statusState.error;
-        state.error = action.payload;
+        handleRejected(state, action);
       }),
 });
 

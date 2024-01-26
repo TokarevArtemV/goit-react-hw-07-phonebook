@@ -19,6 +19,7 @@
 }
 
 .contactsContainer {
+  position: relative;
   height: 490px;
   width: 100%;
   margin-left: auto;

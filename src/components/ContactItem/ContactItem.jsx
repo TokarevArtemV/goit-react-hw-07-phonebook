@@ -1,7 +1,8 @@
-import css from 'components/ContactItem/ContactItem.module.css';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { selectLocation } from '../../redux';
+
+import css from 'components/ContactItem/ContactItem.module.css';
 
 export const ContactItem = ({
   contact: { id, name, phone, avatar },

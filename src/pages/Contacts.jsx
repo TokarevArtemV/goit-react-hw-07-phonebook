@@ -7,11 +7,18 @@ import {
   selectError,
   selectStatus,
 } from '../redux';
-import { Loader } from 'components/Loader/Loader';
-import { ContactForm, Filter, Container, ContactsList } from 'components';
+
+import {
+  ContactForm,
+  Filter,
+  Container,
+  ContactsList,
+  Loader,
+} from 'components';
+
 import css from 'components/App/App.module.css';
 
-const Contacts = () => {
+export const Contacts = () => {
   const location = useLocation();
   const contacts = useSelector(selectContacts);
   const status = useSelector(selectStatus);
@@ -40,5 +47,3 @@ const Contacts = () => {
     </>
   );
 };
-
-export default Contacts;

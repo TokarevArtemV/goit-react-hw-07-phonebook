@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { selectContactById } from '../../redux';
 import css from 'pages/ContactDetails.module.css';
 
-const ContactDetailsContainer = () => {
+export const ContactDetailsContainer = () => {
   const contact = useSelector(selectContactById);
   return (
     <div>
@@ -35,5 +35,3 @@ const ContactDetailsContainer = () => {
     </div>
   );
 };
-
-export default ContactDetailsContainer;

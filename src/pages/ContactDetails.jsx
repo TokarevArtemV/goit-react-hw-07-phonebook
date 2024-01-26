@@ -1,5 +1,5 @@
-import { NavLink, useParams } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   apiGetContactById,
@@ -7,12 +7,12 @@ import {
   selectError,
   selectStatus,
 } from '../redux';
-import ContactDetailsContainer from 'components/ContactDetailsContainer/ContactDetailsContainer';
-import { Loader } from 'components/Loader/Loader';
+
+import { ContactDetailsContainer, Loader } from 'components';
 
 import css from 'pages/ContactDetails.module.css';
 
-const ContactDetails = location => {
+export const ContactDetails = location => {
   const { contactId } = useParams(null);
   const backLink = useRef(location.state?.from ?? '/');
   const dispatch = useDispatch();
@@ -36,5 +36,3 @@ const ContactDetails = location => {
     </>
   );
 };
-
-export default ContactDetails;
